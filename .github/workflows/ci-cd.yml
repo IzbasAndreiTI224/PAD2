@@ -1,0 +1,72 @@
+name: CI/CD Pipeline - SmartProxyPAD Web Client
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Essential Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Install test dependencies
+      run: |
+        echo '{
+          "name": "smartproxypad-web-client",
+          "devDependencies": {
+            "jest": "^29.7.0",
+            "jest-environment-jsdom": "^29.7.0"
+          },
+          "scripts": {
+            "test": "jest"
+          }
+        }' > package.json
+        npm install
+    
+    - name: Run Unit Tests
+      run: npm test
+    
+    - name: Validate HTML
+      run: |
+        echo "🔄 Validating HTML structure..."
+        if grep -q "<!DOCTYPE html>" index.html; then
+          echo "✅ HTML doctype is correct"
+        else
+          echo "❌ Missing doctype declaration" && exit 1
+        fi
+        
+        if grep -q "</html>" index.html; then
+          echo "✅ HTML is properly closed"
+        else
+          echo "❌ HTML not properly closed" && exit 1
+        fi
+        
+        echo "✅ HTML validation passed!"
+
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        publish_branch: gh-pages
