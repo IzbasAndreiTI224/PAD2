@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartProxyPAD Web Client</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 SmartProxyPAD Movie Manager</h1>
+        
+        <div class="grid-container">
+            <table id="gridMovies">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Actors</th>
+                        <th>Budget</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody id="moviesBody">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-container">
+            <div class="form-group">
+                <input type="text" id="txtId" placeholder="ID (auto-generated)" readonly>
+            </div>
+            
+            <div class="form-group">
+                <input type="text" id="txtTitle" placeholder="Title">
+            </div>
+            
+            <div class="form-group">
+                <input type="text" id="txtActors" placeholder="Actors (comma-separated)">
+            </div>
+            
+            <div class="form-group">
+                <input type="number" id="txtBudget" placeholder="Budget">
+            </div>
+            
+            <div class="form-group">
+                <textarea id="txtDescription" placeholder="Description" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <button id="btnGetAll" class="btn btn-primary">GET ALL</button>
+            <button id="btnGetByTitle" class="btn btn-secondary">GET BY TITLE</button>
+            <button id="btnPost" class="btn btn-success">POST (Create)</button>
+            <button id="btnPut" class="btn btn-warning">PUT (Update)</button>
+            <button id="btnDelete" class="btn btn-danger">DELETE</button>
+            <button id="btnClear" class="btn btn-info">CLEAR</button>
+        </div>
+
+        <div id="statusMessage" class="status-message"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
