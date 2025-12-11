@@ -60,6 +60,13 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/main'
     
+    # === BLOC DE PERMISIUNI ADAUGAT AICI ===
+    permissions:
+      contents: write    # Necesar pentru a scrie pe branch-ul gh-pages
+      pages: write       # Necesar pentru deploy la GitHub Pages
+      id-token: write    # Necesar pentru deploy la GitHub Pages
+    # ======================================
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
